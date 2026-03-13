@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>بطاقة عيد</title>
+
+<!-- خط عربي حديث -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    text-align: center;
+    font-family: 'Tajawal', sans-serif;
+    background-color: #fdf6e3;
+    direction: rtl;
+  }
+  input {
+    font-size: 18px;
+    padding: 10px;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: 'Tajawal', sans-serif;
+  }
+  button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ff8c00;
+    color: white;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+  }
+  canvas {
+    margin-top: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<h2>اكتب اسمك للحصول على بطاقة العيد</h2>
+
+<input type="text" id="name" placeholder="اكتب اسمك هنا">
+<button onclick="generate()">إنشاء البطاقة</button>
+
+<br><br>
+<!-- حجم البطاقة 1080 × 1920 -->
+<canvas id="card" width="1080" height="1920"></canvas>
+
+<br><br>
+<button onclick="download()">تحميل البطاقة</button>
+
+<script>
+function generate() {
+  var name = document.getElementById("name").value || "عيدكم مبارك";
+  var canvas = document.getElementById("card");
+  var ctx = canvas.getContext("2d");
+
+  var img = new Image();
+  img.src = "eid-card.png";
+
+  img.onload = function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // خط حديث
+    ctx.font = "bold 45px 'Hanimation Arabic Light'";
+    ctx.fillStyle = "#414042";
+    ctx.textAlign = "center";
+
+    // موقع الاسم
+    ctx.fillText(name, 540, 1450);
+  }
+}
+
+function download() {
+  var link = document.createElement('a');
+  link.download = 'eid-card.png';
+  link.href = document.getElementById('card').toDataURL();
+  link.click();
+}
+</script>
+
+</body>
+</html>
